@@ -2,13 +2,13 @@ using EReceipt.Core.Dtos;
 
 namespace EReceipt.Core.Persistence;
 
-class MockData
+internal static class MockData
 {
     public static List<StoreReceiptDto> StoreReceipts { get; } = new()
     {
         new StoreReceiptDto
         {
-            Id = Guid.NewGuid(),
+            Id = "14BD3112-26A1-45CF-8CB7-8AE190C6217C",
             StoreName = "Walmart",
             Items = new Dictionary<string, double>
             {
@@ -23,7 +23,7 @@ class MockData
         },
         new StoreReceiptDto
         {
-            Id = Guid.NewGuid(),
+            Id = "F693DCCB-17AF-4566-9FC6-5F015669BC0C",
             StoreName = "Target",
             Items = new Dictionary<string, double>
             {
@@ -45,7 +45,7 @@ class MockData
         },
         new StoreReceiptDto
         {
-            Id = Guid.NewGuid(),
+            Id = "11847105-9A9A-463A-A2BF-75560346D608",
             StoreName = "Costco",
             Items = new Dictionary<string, double>
             {
@@ -69,7 +69,7 @@ class MockData
         },
         new StoreReceiptDto
         {
-            Id = Guid.NewGuid(),
+            Id = "04734E4D-2166-44E6-A395-29D2EBEB9A06",
             StoreName = "Lidl",
             Items = new Dictionary<string, double>
             {
@@ -84,7 +84,7 @@ class MockData
         },
         new StoreReceiptDto
         {
-            Id = Guid.NewGuid(),
+            Id = "14F25F14-1F04-4ED2-A475-C82961EF15C0",
             StoreName = "Whole Foods",
             Items = new Dictionary<string, double>
             {

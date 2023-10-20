@@ -2,7 +2,7 @@ namespace EReceipt.Core.Dtos;
 
 public class StoreReceiptDto
 {
-    public Guid? Id { get; set; }
+    public string? Id { get; set; }
     public string? StoreName { get; set; }
     public Dictionary<string, double>? Items { get; set; }
     public DateTime? Date { get; set; }

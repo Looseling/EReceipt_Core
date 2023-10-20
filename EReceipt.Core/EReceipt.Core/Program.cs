@@ -1,12 +1,9 @@
-
-
 using EReceipt.Core.Persistence;
 using EReceipt.Core.Dtos;
-using System.Diagnostics;
 
 namespace EReceipt.Core
 {
-    public class Program
+    public static class Program
     {
         public static void Main(string[] args)
         {
@@ -32,52 +29,11 @@ namespace EReceipt.Core
 
             app.UseAuthorization();
 
-            var summaries = new[]
+            app.MapGet("/GetQRData/{id}", (string id) =>
             {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-            };
-
-            app.MapGet("/weatherforecast", (HttpContext httpContext) =>
-            {
-                var forecast = Enumerable.Range(1, 5).Select(index =>
-                    new WeatherForecast
-                    {
-                        Date = DateOnly.FromDateTime(DateTime.Now.AddDays(index)),
-                        TemperatureC = Random.Shared.Next(-20, 55),
-                        Summary = summaries[Random.Shared.Next(summaries.Length)]
-                    })
-                    .ToArray();
-                return forecast;
-            })
-            .WithName("GetWeatherForecast")
-            .WithOpenApi();
-
-            app.MapGet("/GetQRData/{QRV:int}", (int QRV) =>
-            {
-                StoreReceiptDto result = null;
-                
-                switch (QRV)
-                {
-                    case 1:
-                        result = MockData.StoreReceipts[0];
-                        break;
-                    case 2:
-                        result = MockData.StoreReceipts[1];
-                        break;
-                    case 3:
-                        result = MockData.StoreReceipts[2];
-                        break;
-                    case 4:
-                        result = MockData.StoreReceipts[3];
-                        break;
-                    case 5:
-                        result = MockData.StoreReceipts[4];
-                        break;
-                    default:
-                        return Results.BadRequest();
-
-                }
-                return Results.Ok(result);
+                //find by uid linq
+                StoreReceiptDto? result = MockData.StoreReceipts.FirstOrDefault(x => x.Id == id);
+                return result != null ? Results.Ok(result) : Results.NotFound();
             });
 
             app.Run();

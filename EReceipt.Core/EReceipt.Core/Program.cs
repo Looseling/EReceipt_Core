@@ -2,6 +2,7 @@
 
 using EReceipt.Core.Persistence;
 using EReceipt.Core.Dtos;
+using System.Diagnostics;
 
 namespace EReceipt.Core
 {
@@ -73,9 +74,10 @@ namespace EReceipt.Core
                         result = MockData.StoreReceipts[4];
                         break;
                     default:
-                        return null;
+                        return Results.BadRequest();
+
                 }
-                return result;
+                return Results.Ok(result);
             });
 
             app.Run();

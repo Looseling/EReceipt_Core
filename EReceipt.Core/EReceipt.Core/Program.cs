@@ -1,5 +1,5 @@
+using EReceipt.Core.Dto;
 using EReceipt.Core.Persistence;
-using EReceipt.Core.Dtos;
 
 namespace EReceipt.Core
 {
@@ -32,8 +32,14 @@ namespace EReceipt.Core
             app.MapGet("/GetQRData/{id}", (string id) =>
             {
                 //find by uid linq
-                StoreReceiptDto? result = MockData.StoreReceipts.FirstOrDefault(x => x.Id == id);
-                return result != null ? Results.Ok(result) : Results.NotFound();
+                TransactionDto? result = MockData.Transactions.FirstOrDefault(x => x.Id == id);
+                if (result != null)
+                {
+                    result.Date = DateTime.Now;
+                    return Results.Ok(result);
+                }
+
+                return Results.NotFound();
             });
 
             app.Run();

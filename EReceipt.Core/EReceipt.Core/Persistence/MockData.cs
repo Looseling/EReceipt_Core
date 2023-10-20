@@ -1,4 +1,4 @@
-using EReceipt.Core.Dtos;
+using EReceipt.Core.Dto;
 
 namespace EReceipt.Core.Persistence;
 
@@ -9,7 +9,7 @@ internal static class MockData
         new StoreReceiptDto
         {
             Id = "14BD3112-26A1-45CF-8CB7-8AE190C6217C",
-            StoreName = "Walmart",
+            Recipient = "Walmart",
             Items = new Dictionary<string, double>
             {
                 {"Milk", 2.99},
@@ -24,7 +24,7 @@ internal static class MockData
         new StoreReceiptDto
         {
             Id = "F693DCCB-17AF-4566-9FC6-5F015669BC0C",
-            StoreName = "Target",
+            Recipient = "Target",
             Items = new Dictionary<string, double>
             {
                 {"Meat", 24.99},
@@ -46,7 +46,7 @@ internal static class MockData
         new StoreReceiptDto
         {
             Id = "11847105-9A9A-463A-A2BF-75560346D608",
-            StoreName = "Costco",
+            Recipient = "Costco",
             Items = new Dictionary<string, double>
             {
                 {"Torilla Chips", 9.99},
@@ -70,7 +70,7 @@ internal static class MockData
         new StoreReceiptDto
         {
             Id = "04734E4D-2166-44E6-A395-29D2EBEB9A06",
-            StoreName = "Lidl",
+            Recipient = "Lidl",
             Items = new Dictionary<string, double>
             {
                 {"Sausage", 6.99},
@@ -85,7 +85,7 @@ internal static class MockData
         new StoreReceiptDto
         {
             Id = "14F25F14-1F04-4ED2-A475-C82961EF15C0",
-            StoreName = "Whole Foods",
+            Recipient = "Whole Foods",
             Items = new Dictionary<string, double>
             {
                 {"Piwo Harnas", 3.99},
@@ -101,5 +101,70 @@ internal static class MockData
             Total = 26.96,
             Tax = 3.2
         }
+    };
+
+    public static List<TransactionDto> Transactions { get; } = new()
+    {
+        new TransactionDto
+        {
+            Id = "49E36142-C26B-4625-A06A-D9CB44FA9562",
+            Amount = 10.96,
+            Recipient = "Walmart",
+            StoreReceipt = StoreReceipts[0]
+        },
+        new TransactionDto
+        {
+            Id = "05266A92-1AFB-4C66-A1CE-2EFEECD40049",
+            Amount = 109.9,
+            Recipient = "Target",
+            StoreReceipt = StoreReceipts[1]
+        },
+        new TransactionDto
+        {
+            Id = "DC54B31F-74B7-4E6A-AD9F-8CA07B2857F4",
+            Amount = 61.88,
+            Recipient = "Costco",
+            StoreReceipt = StoreReceipts[2]
+        },
+        new TransactionDto
+        {
+            Id = "A01C8373-6B19-416D-BC97-593E9B5C5A05",
+            Amount = 27.96,
+            Recipient = "Lidl",
+            StoreReceipt = StoreReceipts[3]
+        },
+        new TransactionDto
+        {
+            Id = "5B9B4756-F415-413F-9E42-AA45CF47ED6D",
+            Amount = 26.96,
+            Recipient = "Whole Foods",
+            StoreReceipt = StoreReceipts[4]
+        }
+    };
+
+    public static List<TransactionDto> OldTransactions { get; } = new()
+    {
+        new TransactionDto
+        {
+            Id = "49E36142-C26B-4625-A06A-D9CB44FA9562",
+            Amount = 10.96,
+            Recipient = "Walmart",
+            StoreReceipt = new StoreReceiptDto
+            {
+                Id = "14BD3112-26A1-45CF-8CB7-8AE190C6217C",
+                Recipient = "Walmart",
+                Items = new Dictionary<string, double>
+                {
+                    {"Milk", 2.99},
+                    {"Eggs", 1.99},
+                    {"Bread", 1.99},
+                    {"Cheese", 3.99}
+                },
+                Date = DateTime.Now.AddDays(-10),
+                Total = 10.96,
+                Tax = 1.3
+            },
+            Date = DateTime.Now.AddDays(-10)
+        },
     };
 }

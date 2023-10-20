@@ -1,4 +1,8 @@
 
+
+using EReceipt.Core.Persistence;
+using EReceipt.Core.Dtos;
+
 namespace EReceipt.Core
 {
     public class Program
@@ -30,7 +34,7 @@ namespace EReceipt.Core
             var summaries = new[]
             {
             "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+            };
 
             app.MapGet("/weatherforecast", (HttpContext httpContext) =>
             {
@@ -47,7 +51,37 @@ namespace EReceipt.Core
             .WithName("GetWeatherForecast")
             .WithOpenApi();
 
-            app.Run();
+            app.MapGet("/GetQRData/{QRV:int}", (int QRV) =>
+            {
+                StoreReceiptDto result = null;
+                
+                switch (QRV)
+                {
+                    case 1:
+                        result = MockData.StoreReceipts[0];
+                        break;
+                    case 2:
+                        result = MockData.StoreReceipts[0];
+                        break;
+                    case 3:
+                        result = MockData.StoreReceipts[0];
+                        break;
+                    case 4:
+                        result = MockData.StoreReceipts[0];
+                        break;
+                    case 5:
+                        result = MockData.StoreReceipts[0];
+                        break;
+                    default:
+                        return null;
+                }
+                return result;
+            });
+
+
+
+
+
         }
     }
 }

@@ -61,16 +61,16 @@ namespace EReceipt.Core
                         result = MockData.StoreReceipts[0];
                         break;
                     case 2:
-                        result = MockData.StoreReceipts[0];
+                        result = MockData.StoreReceipts[1];
                         break;
                     case 3:
-                        result = MockData.StoreReceipts[0];
+                        result = MockData.StoreReceipts[2];
                         break;
                     case 4:
-                        result = MockData.StoreReceipts[0];
+                        result = MockData.StoreReceipts[3];
                         break;
                     case 5:
-                        result = MockData.StoreReceipts[0];
+                        result = MockData.StoreReceipts[4];
                         break;
                     default:
                         return null;
@@ -78,10 +78,7 @@ namespace EReceipt.Core
                 return result;
             });
 
-
-
-
-
+            app.Run();
         }
     }
 }

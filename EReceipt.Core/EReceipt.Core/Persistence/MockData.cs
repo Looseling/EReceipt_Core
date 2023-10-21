@@ -4,16 +4,6 @@ namespace EReceipt.Core.Persistence;
 
 internal static class MockData
 {
-    public static List<StoreReceiptDto> StoreReceipts { get; } = new()
-    {
-
-
-
-
-
-    };
-
-
     public static List<TransactionDto> OldTransactions { get; } = new()
     {
         new TransactionDto

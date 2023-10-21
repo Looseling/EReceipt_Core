@@ -29,10 +29,10 @@ namespace EReceipt.Core
 
             app.UseAuthorization();
 
-            app.MapGet("/GetQRData/{id}", (string id) =>
+            app.MapGet("/Transactions/{id}", (string id) =>
             {
                 //find by uid linq
-                TransactionDto? result = MockData.Transactions.FirstOrDefault(x => x.Id == id);
+                TransactionDto? result = MockData.OldTransactions.FirstOrDefault(x => x.Id == id);
                 if (result != null)
                 {
                     result.Date = DateTime.Now;
@@ -40,6 +40,13 @@ namespace EReceipt.Core
                 }
 
                 return Results.NotFound();
+            });
+
+            app.MapGet("/Transactions", () =>
+            {
+
+
+                return MockData.OldTransactions;
             });
 
             app.Run();

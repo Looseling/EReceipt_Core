@@ -1,7 +1,6 @@
+using System.Text;
 using EReceipt.Core.Dto;
 using EReceipt.Core.Persistence;
-using IronPdf;
-using Microsoft.AspNetCore.Mvc;
 
 namespace EReceipt.Core
 {
@@ -22,7 +21,7 @@ namespace EReceipt.Core
 
             var app = builder.Build();
 
-            app.UseCors(builder => builder
+            app.UseCors(corsPolicyBuilder => corsPolicyBuilder
                 .AllowAnyOrigin()
                 .AllowAnyMethod()
                 .AllowAnyHeader());
@@ -56,8 +55,18 @@ namespace EReceipt.Core
                 TransactionDto? result = MockData.OldTransactions.FirstOrDefault(x => x.Id == id);
                 if (result != null)
                 {
+                  StringBuilder sb = new StringBuilder();
+// Loop through the Items dictionary and append a table row for each item
+                  foreach (var item in result.StoreReceipt.Items)
+                  {
+                    sb.Append("<tr>");
+                    sb.Append($"<td align=\"left\" width=\"75%\" style=\"padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">{item.Key}</td>");
+                    sb.Append($"<td align=\"left\" width=\"25%\" style=\"padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">${item.Value}</td>");
+                    sb.Append("</tr>");
+                  }
 
-                    var html = @"
+                  string items = sb.ToString();
+                    var html = $@"
 <!DOCTYPE html>
 <html>
 <head>
@@ -70,21 +79,21 @@ namespace EReceipt.Core
   /**
    * Google webfonts. Recommended to include the .woff version for cross-client compatibility.
    */
-  @media screen {
-    @font-face {
+  @media screen {{
+    @font-face {{
       font-family: 'Source Sans Pro';
       font-style: normal;
       font-weight: 400;
       src: local('Source Sans Pro Regular'), local('SourceSansPro-Regular'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/ODelI1aHBYDBqgeIAH2zlBM0YzuT7MdOe03otPbuUS0.woff) format('woff');
-    }
+    }}
 
-    @font-face {
+    @font-face {{
       font-family: 'Source Sans Pro';
       font-style: normal;
       font-weight: 700;
       src: local('Source Sans Pro Bold'), local('SourceSansPro-Bold'), url(https://fonts.gstatic.com/s/sourcesanspro/v10/toadOcfmlt9b38dHJxOBGFkQc6VGVFSmCnC_l7QZG60.woff) format('woff');
-    }
-  }
+    }}
+  }}
 
   /**
    * Avoid browser level font resizing.
@@ -94,71 +103,71 @@ namespace EReceipt.Core
   body,
   table,
   td,
-  a {
+  a {{
     -ms-text-size-adjust: 100%; /* 1 */
     -webkit-text-size-adjust: 100%; /* 2 */
-  }
+  }}
 
   /**
    * Remove extra space added to tables and cells in Outlook.
    */
   table,
-  td {
+  td {{
     mso-table-rspace: 0pt;
     mso-table-lspace: 0pt;
-  }
+  }}
 
   /**
    * Better fluid images in Internet Explorer.
    */
-  img {
+  img {{
     -ms-interpolation-mode: bicubic;
-  }
+  }}
 
   /**
    * Remove blue links for iOS devices.
    */
-  a[x-apple-data-detectors] {
+  a[x-apple-data-detectors] {{
     font-family: inherit !important;
     font-size: inherit !important;
     font-weight: inherit !important;
     line-height: inherit !important;
     color: inherit !important;
     text-decoration: none !important;
-  }
+  }}
 
   /**
    * Fix centering issues in Android 4.4.
    */
-  div[style*=""margin: 16px 0;""] {
+  div[style*=""margin: 16px 0;""] {{
     margin: 0 !important;
-  }
+  }}
 
-  body {
+  body {{
     width: 100% !important;
     height: 100% !important;
     padding: 0 !important;
     margin: 0 !important;
-  }
+  }}
 
   /**
    * Collapse table borders to avoid space between cells.
    */
-  table {
+  table {{
     border-collapse: collapse !important;
-  }
+  }}
 
-  a {
+  a {{
     color: #1a82e2;
-  }
+  }}
 
-  img {
+  img {{
     height: auto;
     line-height: 100%;
     text-decoration: none;
     border: 0;
     outline: none;
-  }
+  }}
   </style>
 
 </head>
@@ -207,65 +216,22 @@ namespace EReceipt.Core
         <![endif]-->
         <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"" style=""max-width: 600px;"">
 
-          <!-- start copy -->
-          <tr>
-            <td align=""left"" bgcolor=""#ffffff"" style=""padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">
-              <p style=""margin: 0;"">Here is a summary of your recent order. If you have any questions or concerns about your order, please <a href=""https://sendgrid.com"">contact us</a>.</p>
-            </td>
-          </tr>
-          <!-- end copy -->
-
           <!-- start receipt table -->
           <tr>
             <td align=""left"" bgcolor=""#ffffff"" style=""padding: 24px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">
               <table border=""0"" cellpadding=""0"" cellspacing=""0"" width=""100%"">
                 <tr>
                   <td align=""left"" bgcolor=""#D2C7BA"" width=""75%"" style=""padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;""><strong>Order #</strong></td>
-                  <td align=""left"" bgcolor=""#D2C7BA"" width=""25%"" style=""padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;""><strong>0000224</strong></td>
+                  <td align=""left"" bgcolor=""#D2C7BA"" width=""25%"" style=""padding: 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;""><strong>{id.Substring(0, 6)}</strong></td>
                 </tr>
+                {items}
                 <tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Item</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$24.00</td>
-                </tr>
-                <tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Item</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$24.00</td>
-                </tr>
-                <tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-<tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Shipping</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$6.00</td>
-                </tr>
-                <tr>
-                  <td align=""left"" width=""75%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">Sales Tax</td>
-                  <td align=""left"" width=""25%"" style=""padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;"">$0.00</td>
+                  <td align=""left"" width=""75%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>VAT 12%</strong></td>
+                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>${result.StoreReceipt.Tax}</strong></td>
                 </tr>
                 <tr>
                   <td align=""left"" width=""75%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>Total</strong></td>
-                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>$54.00</strong></td>
+                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>${result.Amount}</strong></td>
                 </tr>
               </table>
             </td>
@@ -294,9 +260,9 @@ namespace EReceipt.Core
 
                     //Merging PDF document with Cover page
                     var currentDirectory = Directory.GetCurrentDirectory();
-                    pdf.SaveAs("combined.pdf");
+                    pdf.SaveAs("combined"+id+".pdf");
 
-                    return Results.File(currentDirectory + "/combined.pdf", "application/pdf");
+                    return Results.File(currentDirectory + "/combined"+id+".pdf", "application/pdf");
                 }
 
                 return Results.NotFound();

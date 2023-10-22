@@ -51,13 +51,14 @@ namespace EReceipt.Core
 
             app.MapGet("/GeneratePdf/{id}", (string id) =>
             {
-                //find by uid linq
-                TransactionDto? result = MockData.OldTransactions.FirstOrDefault(x => x.Id == id);
+                //find by uid
+                StoreReceiptDto? result = MockData.OldTransactions.FirstOrDefault(x => x.StoreReceipt.Id == id)?.StoreReceipt;
+                
                 if (result != null)
                 {
                   StringBuilder sb = new StringBuilder();
 // Loop through the Items dictionary and append a table row for each item
-                  foreach (var item in result.StoreReceipt.Items)
+                  foreach (var item in result.Items)
                   {
                     sb.Append("<tr>");
                     sb.Append($"<td align=\"left\" width=\"75%\" style=\"padding: 6px 12px;font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px;\">{item.Key}</td>");
@@ -227,11 +228,11 @@ namespace EReceipt.Core
                 {items}
                 <tr>
                   <td align=""left"" width=""75%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>VAT 12%</strong></td>
-                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>{result.StoreReceipt.Tax} zl</strong></td>
+                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>{result.Tax} zl</strong></td>
                 </tr>
                 <tr>
                   <td align=""left"" width=""75%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>Total</strong></td>
-                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>{result.Amount} zl</strong></td>
+                  <td align=""left"" width=""25%"" style=""padding: 12px; font-family: 'Source Sans Pro', Helvetica, Arial, sans-serif; font-size: 16px; line-height: 24px; border-top: 2px dashed #D2C7BA; border-bottom: 2px dashed #D2C7BA;""><strong>{result.Total} zl</strong></td>
                 </tr>
               </table>
             </td>

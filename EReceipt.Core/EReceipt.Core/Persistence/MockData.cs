@@ -26,7 +26,11 @@ internal static class MockData
                 Total = 10.96,
                 Tax = 1.3
             },
-            Date = DateTime.Now.AddDays(-10)
+            Date = DateTime.Now.AddDays(-10),
+            Sender = "Mike Tyson",
+            SenderAccount = "7760717544",
+            RecipientAccount = "3059833666",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -48,7 +52,11 @@ internal static class MockData
             Total = 11.96,
             Tax = 1.3
         },
-        Date = DateTime.Now.AddDays(-6)
+        Date = DateTime.Now.AddDays(-6),
+        Sender = "Mike Tyson",
+            SenderAccount = "5856007905",
+            RecipientAccount = "7760717544",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -69,7 +77,11 @@ internal static class MockData
                 Total = 20.50,
                 Tax = 2.2
             },
-            Date = DateTime.Now.AddDays(-8)
+            Date = DateTime.Now.AddDays(-8),
+            Sender = "Mike Tyson",
+            SenderAccount = "7103058498",
+            RecipientAccount = "8674956794",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -91,7 +103,11 @@ internal static class MockData
             Total = 20.50,
             Tax = 2.0
         },
-        Date = DateTime.Now.AddDays(-15)
+        Date = DateTime.Now.AddDays(-15),
+            Sender = "Mike Tyson",
+            SenderAccount = "5161507114",
+            RecipientAccount = "6821156889",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -113,7 +129,11 @@ internal static class MockData
             Total = 10.96,
             Tax = 1.3
         },
-            Date = DateTime.Now.AddDays(-24)
+            Date = DateTime.Now.AddDays(-24),
+            Sender = "Mike Tyson",
+            SenderAccount = "1124311483",
+            RecipientAccount = "7539792669",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -142,7 +162,11 @@ internal static class MockData
             Total = 109.9,
             Tax = 13.2
         },
-             Date = DateTime.Now.AddDays(-25)
+            Date = DateTime.Now.AddDays(-25),
+            Sender = "Mike Tyson",
+            SenderAccount = "4253473510",
+            RecipientAccount = "3460308888",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -173,7 +197,11 @@ internal static class MockData
             Total = 61.88,
             Tax = 7.4
         },
-             Date = DateTime.Now.AddDays(-26)
+             Date = DateTime.Now.AddDays(-26),
+            Sender = "Mike Tyson",
+            SenderAccount = "8046319554",
+            RecipientAccount = "3353128014",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -195,7 +223,11 @@ internal static class MockData
             Total = 27.96,
             Tax = 3.36
         },
-             Date = DateTime.Now.AddDays(-27)
+             Date = DateTime.Now.AddDays(-27),
+            Sender = "Mike Tyson",
+            SenderAccount = "89034576034",
+            RecipientAccount = "5476304589",
+            TransactionType = TransType.Expense
         },
         new TransactionDto
         {
@@ -221,7 +253,11 @@ internal static class MockData
             Total = 26.96,
             Tax = 3.2
         },
-            Date = DateTime.Now.AddDays(-28)
+            Date = DateTime.Now.AddDays(-28),
+            Sender = "Mike Tyson",
+            SenderAccount = "4253473510",
+            RecipientAccount = "9702893476",
+            TransactionType = TransType.Expense
         }
     };
 }
